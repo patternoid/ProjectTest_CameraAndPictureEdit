@@ -13,5 +13,6 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("TEst", "Commit Test");
         Log.d("TEst", "Commit Test");
+        Log.d("TEst", "Commit Test");
     }
 }

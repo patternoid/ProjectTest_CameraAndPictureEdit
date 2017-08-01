@@ -45,32 +45,42 @@ class PermissionManager private constructor(){
 
 
 
-    fun requestPermission( targetActivity : Activity, permission: String, requestCode : Int  ){
-        val permissions = arrayOf(permission)
-        ActivityCompat.requestPermissions( targetActivity, permissions, requestCode)
+    fun requestPermission( targetActivity : Activity, permission: Array<String> , requestCode : Int  ){
+        ActivityCompat.requestPermissions( targetActivity, permission, requestCode)
     }
 
 
 
 
-    fun retryRequestPermission( targetActivity: Activity , permission : String , requestCode : Int){
+    fun retryRequestPermission( targetActivity: Activity , permission: Array<String> , requestCode : Int){
 
         if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ){
 
-            if( targetActivity.shouldShowRequestPermissionRationale( permission) ){
+            for ( item : String in permission)
+            {
+                if( targetActivity.shouldShowRequestPermissionRationale( item) ){
 
-                showMessagePermission("권한 허가를 요청합니다" ,targetActivity,DialogInterface.OnClickListener { dialogInterface, i ->
-                    requestPermission(targetActivity, permission, requestCode )
+                    showMessagePermission("권한 허가를 요청합니다" ,targetActivity,DialogInterface.OnClickListener { dialogInterface, i ->
+                        requestPermission(targetActivity, permission, requestCode )
 
-                })
+                    })
+                }
             }
+
         }
     }
 
 
 
     fun isAcceptPermission( grantResults: IntArray ) : Boolean{
-        return (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+
+        for( item : Int in grantResults )
+        {
+            if( item == PackageManager.PERMISSION_DENIED)
+                return false
+        }
+
+        return true
     }
 
 

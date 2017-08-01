@@ -1,4 +1,4 @@
-package com.dnp.coai.cameraandpictureedittest
+package com.dnp.coai.cameraandpictureedittest.camera
 
 import android.app.Activity
 import android.content.Intent
@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import com.dnp.coai.cameraandpictureedittest.R
 import kotlinx.android.synthetic.main.activity_image_pick.*
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -37,7 +38,7 @@ class ImagePickActivity : AppCompatActivity() {
             addCategory( Intent.CATEGORY_OPENABLE )
         }
 
-        startActivityForResult( intent, REQUEST_CODE )
+        startActivityForResult( intent, REQUEST_CODE)
     }
 
 

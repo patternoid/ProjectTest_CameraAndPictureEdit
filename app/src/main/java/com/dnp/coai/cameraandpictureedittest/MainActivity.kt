@@ -1,12 +1,11 @@
 package com.dnp.coai.cameraandpictureedittest
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
-import android.support.v4.app.ActivityCompat
 import android.util.Log
+import com.dnp.coai.cameraandpictureedittest.camera.CameraMediaStoreActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -34,7 +33,12 @@ class MainActivity : AppCompatActivity() {
             }
 
             else{
-                permissionManager.requestPermission(this@MainActivity, cameraPermission, MY_PERMISSION_REQUEST_CODE)
+                val permissions : Array<String> = arrayOf(
+                        android.Manifest.permission.CAMERA,
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE )
+
+                permissionManager.requestPermission(this@MainActivity, permissions, MY_PERMISSION_REQUEST_CODE)
             }
         }
     }
@@ -48,14 +52,19 @@ class MainActivity : AppCompatActivity() {
         {
             MY_PERMISSION_REQUEST_CODE ->{
 
-                if(grantResults.size > 0){
+                if( grantResults.isNotEmpty() ){
 
                     if( permissionManager.isAcceptPermission(grantResults) ){
                         startCameraActivity()
                     }
 
                     else{
-                        permissionManager.retryRequestPermission( this@MainActivity, android.Manifest.permission.CAMERA, MY_PERMISSION_REQUEST_CODE)
+                        val permissions : Array<String> = arrayOf(
+                                android.Manifest.permission.CAMERA,
+                                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                android.Manifest.permission.READ_EXTERNAL_STORAGE)
+
+                        permissionManager.requestPermission(this@MainActivity, permissions, MY_PERMISSION_REQUEST_CODE)
                     }
                 }
             }

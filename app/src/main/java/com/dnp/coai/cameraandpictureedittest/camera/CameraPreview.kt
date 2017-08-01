@@ -1,4 +1,4 @@
-package com.dnp.coai.cameraandpictureedittest
+package com.dnp.coai.cameraandpictureedittest.camera
 
 import android.content.Context
 import android.hardware.Camera
@@ -69,7 +69,7 @@ class CameraPreview: SurfaceView , SurfaceHolder.Callback{
             mCamera!!.setPreviewDisplay(mHolder)
             mCamera!!.startPreview()
         } catch ( e : Exception){
-            Log.d( TAG, "Error starting caemra preview: " + e.message)
+            Log.d(TAG, "Error starting caemra preview: " + e.message)
         }
 
     }

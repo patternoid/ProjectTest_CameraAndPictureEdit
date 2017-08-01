@@ -1,4 +1,4 @@
-package com.dnp.coai.cameraandpictureedittest
+package com.dnp.coai.cameraandpictureedittest.camera
 
 import android.content.Context
 import android.content.Intent
@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import com.dnp.coai.cameraandpictureedittest.PermissionManager
+import com.dnp.coai.cameraandpictureedittest.R
 import kotlinx.android.synthetic.main.activity_camera.*
 import java.io.File
 import java.io.FileNotFoundException
@@ -32,7 +34,7 @@ class CameraActivity : AppCompatActivity() , Camera.PictureCallback {
 
     private var mCamera : Camera? = null
     private var mPreview: CameraPreview? = null
-    val permissionManager: PermissionManager by lazy {  PermissionManager.instance }
+    val permissionManager: PermissionManager by lazy { PermissionManager.instance }
     val MY_PERMISSION_REQUEST_CODE : Int = 100
 
 
@@ -44,11 +46,11 @@ class CameraActivity : AppCompatActivity() , Camera.PictureCallback {
         mCamera = getCameraInstance()
 
         mCamera?.let{
-            mPreview = CameraPreview( this@CameraActivity, mCamera!! )
+            mPreview = CameraPreview(this@CameraActivity, mCamera!!)
             camera_preview.addView(mPreview)
 
             button_capture.setOnClickListener { v ->
-
+                /*
                 val permission      : String               = android.Manifest.permission.WRITE_EXTERNAL_STORAGE
                 val gotPermission   : Boolean              = permissionManager.updatePermission(this@CameraActivity, permission)
 
@@ -59,12 +61,15 @@ class CameraActivity : AppCompatActivity() , Camera.PictureCallback {
                 else{
                     permissionManager.requestPermission(this@CameraActivity, permission, MY_PERMISSION_REQUEST_CODE)
                 }
+                */
+                mCamera!!.takePicture(null, null, this@CameraActivity )
             }
         }
     }
 
 
 
+/*
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
 
@@ -72,7 +77,7 @@ class CameraActivity : AppCompatActivity() , Camera.PictureCallback {
         {
             MY_PERMISSION_REQUEST_CODE ->{
 
-                if(grantResults.size > 0){
+                if( grantResults.isNotEmpty() ){
 
                     if( permissionManager.isAcceptPermission(grantResults) ){
                         mCamera!!.takePicture(null, null, this@CameraActivity )
@@ -86,6 +91,7 @@ class CameraActivity : AppCompatActivity() , Camera.PictureCallback {
         }
     }
 
+*/
 
 
 
@@ -102,6 +108,8 @@ class CameraActivity : AppCompatActivity() , Camera.PictureCallback {
 
         return camera
     }
+
+
 
 
     override fun onPictureTaken(data : ByteArray?, camera : Camera?) {
@@ -122,10 +130,10 @@ class CameraActivity : AppCompatActivity() , Camera.PictureCallback {
                 when(e)
                 {
                     is FileNotFoundException ->
-                        Log.d( TAG, "File not found : " + e.message )
+                        Log.d(TAG, "File not found : " + e.message )
 
                     is IOException ->
-                        Log.d( TAG, "Error accessing file : " + e.message )
+                        Log.d(TAG, "Error accessing file : " + e.message )
 
                     else -> throw e
                 }
